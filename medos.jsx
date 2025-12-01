@@ -598,8 +598,149 @@ const generateFormulaFromSumProblem = () => {
   };
 };
 
+// --- GEOMETRIC PROGRESSION GENERATORS ---
+
+// LEVEL 1: Definition (Multiple Choice) for Geometric Progression
+const generateGeometricDefinitionProblem = () => {
+  const isGP = Math.random() > 0.4;
+  let formula, hints;
+
+  if (isGP) {
+    const base = randomInt(2, 4);
+    const coeff = randomInt(1, 5);
+    formula = `a_n = ${coeff} \\cdot ${base}^n`;
+
+    hints = [
+      <span>Sakykime, kad <Latex>n</Latex> yra laisvai pasirinktas natūralusis skaičius. Reikia įrodyti, kad <Latex>{'\\frac{a_{n+1}}{a_n} = q'}</Latex> (pastovus skaičius).</span>,
+      <span>
+        Apskaičiuojame <Latex>{'\\frac{a_{n+1}}{a_n}'}</Latex>:<br />
+        <Latex>{`\\frac{a_{n+1}}{a_n} = \\frac{${coeff} \\cdot ${base}^{n+1}}{${coeff} \\cdot ${base}^n} = ${base}`}</Latex>
+      </span>,
+      <span>
+        Santykis nepriklausodas nuo <Latex>n</Latex> ir lygus <Latex>{base}</Latex>. Todėl ši seka <strong>yra</strong> geometrinė progresija.<br />
+        <strong>Atsakymas: Taip</strong>
+      </span>
+    ];
+  } else {
+    const coeff = randomInt(2, 5);
+    formula = `a_n = ${coeff}n + 1`;
+
+    hints = [
+      <span>Sakykime, kad <Latex>n</Latex> yra laisvai pasirinktas natūralusis skaičius. Reikia patikrinti, ar <Latex>{'\\frac{a_{n+1}}{a_n} = q'}</Latex>.</span>,
+      <span>
+        Apskaičiuojame <Latex>{'\\frac{a_{n+1}}{a_n}'}</Latex>:<br />
+        <Latex>{`\\frac{a_{n+1}}{a_n} = \\frac{${coeff}(n+1) + 1}{${coeff}n + 1} = \\frac{${coeff}n + ${coeff + 1}}{${coeff}n + 1}`}</Latex>
+      </span>,
+      <span>
+        Santykis priklauso nuo <Latex>n</Latex>, todėl ši seka <strong>nėra</strong> geometrinė progresija.<br />
+        <strong>Atsakymas: Ne</strong>
+      </span>
+    ];
+  }
+
+  return {
+    id: `geo-def-${Date.now()}`,
+    category: '1 Lygis: Apibrėžimas',
+    type: 'CHOICE',
+    options: ['Taip', 'Ne'],
+    question: (
+      <span>
+        Skaičių sekos <Latex>n</Latex>-tojo nario formulė yra <Latex>{formula}</Latex> su kiekvienu <Latex>n \\in N</Latex>.<br />
+        Ar ši seka yra <strong>geometrinė progresija</strong>?
+      </span>
+    ),
+    answer: isGP ? "Taip" : "Ne",
+    hints: hints
+  };
+};
+
+// LEVEL 2: Simple Next Term for Geometric Progression
+const generateGeometricSimpleMissingTermProblem = () => {
+  const start = randomInt(2, 8);
+  const ratio = randomInt(2, 4);
+  const sequence = `${start}, ${start * ratio}, ${start * ratio * ratio}`;
+  const answer = start * ratio * ratio * ratio;
+
+  return {
+    id: `geo-simple-miss-${Date.now()}`,
+    category: '2 Lygis: Sekos Tęsimas',
+    type: 'INPUT',
+    question: (
+      <span>
+        Pratęskite geometrinę progresiją įrašydami kitą narį:<br />
+        <div className="text-2xl mt-4 bg-blue-50 p-4 rounded-lg text-center tracking-widest text-indigo-700 font-mono">
+          <Latex>{`${sequence}, \\dots`}</Latex> <span className="underline decoration-dotted text-slate-400">?</span>
+        </div>
+      </span>
+    ),
+    answer: answer.toString(),
+    hints: [
+      <span>Raskite santykį tarp gretimų narių (<Latex>q</Latex>).</span>,
+      <span><Latex>{`\\frac{${start * ratio}}{${start}} = ${ratio}`}</Latex>. Santykis yra {ratio}.</span>,
+      <span>Paskutinį narį (<Latex>{start * ratio * ratio}</Latex>) padauginkite iš <Latex>{ratio}</Latex>.<br />
+        <Latex>{`${start * ratio * ratio} \\cdot ${ratio} = ${answer}`}</Latex>.<br />
+        <strong>Atsakymas: {answer}</strong></span>
+    ]
+  };
+};
+
+// LEVEL 3: Find Nth Term for Geometric Progression
+const generateGeometricNthTermProblem = () => {
+  const start = randomInt(2, 10);
+  const ratio = randomInt(2, 3);
+  const targetN = randomInt(5, 8);
+  const sequence = `${start}, ${start * ratio}, ${start * ratio * ratio}`;
+  const answer = start * Math.pow(ratio, targetN - 1);
+
+  return {
+    id: `geo-nth-${Date.now()}`,
+    category: '3 Lygis: n-tojo Nario Formulė',
+    type: 'INPUT',
+    question: (
+      <span>
+        Duota seka: <strong><Latex>{`${sequence}, \\dots`}</Latex></strong><br />
+        Apskaičiuokite šios sekos <strong>{targetN}-ąjį</strong> narį (<Latex>{`a_{${targetN}}`}</Latex>).
+      </span>
+    ),
+    answer: answer.toString(),
+    hints: [
+      <span>Formulė: <Latex>a_n = a_1 \\cdot q^{`{n-1}`}</Latex></span>,
+      <span>Čia <Latex>{`a_1 = ${start}, q = ${ratio}, n = ${targetN}`}</Latex>.</span>,
+      <span><Latex>{`a_{${targetN}} = ${start} \\cdot ${ratio}^{${targetN}-1} = ${start} \\cdot ${Math.pow(ratio, targetN - 1)} = ${answer}`}</Latex>.<br />
+        <strong>Atsakymas: {answer}</strong></span>
+    ]
+  };
+};
+
+// Simple placeholder generators for remaining levels (4-10)
+const generateGeometricPlaceholder = (level, category) => () => {
+  const start = randomInt(2, 5);
+  const ratio = 2;
+  const n = 3;
+  const answer = start * Math.pow(ratio, n - 1);
+
+  return {
+    id: `geo-placeholder-${level}-${Date.now()}`,
+    category: `${level} Lygis: ${category}`,
+    type: 'INPUT',
+    question: (
+      <span>
+        Geometrinės progresijos užduotis (lygis {level}):<br />
+        Raskite 3-ąjį narį sekos: <Latex>{`${start}, ${start * ratio}, \\dots`}</Latex>
+      </span>
+    ),
+    answer: answer.toString(),
+    hints: [
+      <span>Naudokite formulę: <Latex>a_n = a_1 \\cdot q^{`{n-1}`}</Latex></span>,
+      <span>Čia <Latex>{`a_1 = ${start}, q = ${ratio}`}</Latex>.</span>,
+      <span><Latex>{`a_3 = ${start} \\cdot ${ratio}^2 = ${answer}`}</Latex>.<br />
+        <strong>Atsakymas: {answer}</strong></span>
+    ]
+  };
+};
+
 // Strict Progression: Definition -> Next Term -> Nth Formula -> Algebra -> Sum Formula
-const homeworkFlow = [
+const arithmeticFlow = [
   generateDefinitionProblem,        // Level 1
   generateSimpleMissingTermProblem, // Level 2
   generateNthTermProblem,           // Level 3
@@ -612,12 +753,55 @@ const homeworkFlow = [
   generateFormulaFromSumProblem     // Level 10
 ];
 
+const geometricFlow = [
+  generateGeometricDefinitionProblem,        // Level 1
+  generateGeometricSimpleMissingTermProblem, // Level 2
+  generateGeometricNthTermProblem,           // Level 3
+  generateGeometricPlaceholder(4, 'Nario Tikrinimas'),       // Level 4
+  generateGeometricPlaceholder(5, 'Pirmojo Nario Radimas'),  // Level 5
+  generateGeometricPlaceholder(6, 'Kito Nario Radimas'),     // Level 6
+  generateGeometricPlaceholder(7, 'Sumos Skaičiavimas'),     // Level 7
+  generateGeometricPlaceholder(8, 'Suma (žinomas paskutinis narys)'),  // Level 8
+  generateGeometricPlaceholder(9, 'Nario radimas iš sumos formulės'),  // Level 9
+  generateGeometricPlaceholder(10, 'n-tojo nario formulė iš sumos')    // Level 10
+];
+
+// Keep backward compatibility
+const homeworkFlow = arithmeticFlow;
+
 const levelCategories = homeworkFlow.map(fn => fn().category);
 
 export default function MathHomeworkApp() {
+  // Routing state
+  const [currentPage, setCurrentPage] = useState(() => {
+    const hash = window.location.hash.slice(1); // Remove the #
+    return hash || '/aritmetine';
+  });
+
+  // Get the current exercise flow based on the page
+  const getCurrentFlow = () => {
+    return currentPage === '/geometrine' ? geometricFlow : arithmeticFlow;
+  };
+
+  // Get page title
+  const getPageTitle = () => {
+    return currentPage === '/geometrine' ? 'Geometrinė Progresija' : 'Aritmetinė Progresija';
+  };
+
+  // Listen to hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1) || '/aritmetine';
+      setCurrentPage(hash);
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   // State with localStorage persistence
   const [currentLevelIndex, setCurrentLevelIndex] = useState(() => {
-    const saved = localStorage.getItem('mathlab_level');
+    const saved = localStorage.getItem(`mathlab_level_${currentPage}`);
     return saved !== null ? parseInt(saved, 10) : 0;
   });
 
@@ -628,25 +812,25 @@ export default function MathHomeworkApp() {
   const [maxHints] = useState(3);
 
   const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem('mathlab_progress');
+    const saved = localStorage.getItem(`mathlab_progress_${currentPage}`);
     return saved !== null ? parseFloat(saved) : 0;
   });
 
   const [streak, setStreak] = useState(() => {
-    const saved = localStorage.getItem('mathlab_streak');
+    const saved = localStorage.getItem(`mathlab_streak_${currentPage}`);
     return saved !== null ? parseInt(saved, 10) : 0;
   });
 
   const [showModal, setShowModal] = useState(() => {
-    const saved = localStorage.getItem('mathlab_showModal');
+    const saved = localStorage.getItem(`mathlab_showModal_${currentPage}`);
     return saved !== null ? JSON.parse(saved) : true;
   });
 
   const [isLevelComplete, setIsLevelComplete] = useState(false);
 
   const [maxLevelReached, setMaxLevelReached] = useState(() => {
-    const savedMax = localStorage.getItem('mathlab_max_level');
-    const savedCurrent = localStorage.getItem('mathlab_level');
+    const savedMax = localStorage.getItem(`mathlab_max_level_${currentPage}`);
+    const savedCurrent = localStorage.getItem(`mathlab_level_${currentPage}`);
     const current = savedCurrent !== null ? parseInt(savedCurrent, 10) : 0;
     const max = savedMax !== null ? parseInt(savedMax, 10) : 0;
     return Math.max(current, max);
@@ -656,11 +840,11 @@ export default function MathHomeworkApp() {
   const [isGameComplete, setIsGameComplete] = useState(false);
 
   // Save state to localStorage
-  useEffect(() => { localStorage.setItem('mathlab_level', currentLevelIndex); }, [currentLevelIndex]);
-  useEffect(() => { localStorage.setItem('mathlab_progress', progress); }, [progress]);
-  useEffect(() => { localStorage.setItem('mathlab_streak', streak); }, [streak]);
-  useEffect(() => { localStorage.setItem('mathlab_showModal', JSON.stringify(showModal)); }, [showModal]);
-  useEffect(() => { localStorage.setItem('mathlab_max_level', maxLevelReached); }, [maxLevelReached]);
+  useEffect(() => { localStorage.setItem(`mathlab_level_${currentPage}`, currentLevelIndex); }, [currentLevelIndex, currentPage]);
+  useEffect(() => { localStorage.setItem(`mathlab_progress_${currentPage}`, progress); }, [progress, currentPage]);
+  useEffect(() => { localStorage.setItem(`mathlab_streak_${currentPage}`, streak); }, [streak, currentPage]);
+  useEffect(() => { localStorage.setItem(`mathlab_showModal_${currentPage}`, JSON.stringify(showModal)); }, [showModal, currentPage]);
+  useEffect(() => { localStorage.setItem(`mathlab_max_level_${currentPage}`, maxLevelReached); }, [maxLevelReached, currentPage]);
 
   useEffect(() => {
     if (currentLevelIndex > maxLevelReached) {
@@ -670,9 +854,27 @@ export default function MathHomeworkApp() {
 
   // Sync progress with maxLevelReached to ensure it reflects unlocked levels
   useEffect(() => {
-    const minProgress = (maxLevelReached / homeworkFlow.length) * 100;
+    const flow = getCurrentFlow();
+    const minProgress = (maxLevelReached / flow.length) * 100;
     setProgress(prev => Math.max(prev, minProgress));
   }, [maxLevelReached]);
+
+  // Reset state when page changes
+  useEffect(() => {
+    const saved = localStorage.getItem(`mathlab_level_${currentPage}`);
+    const savedProgress = localStorage.getItem(`mathlab_progress_${currentPage}`);
+    const savedStreak = localStorage.getItem(`mathlab_streak_${currentPage}`);
+    const savedMax = localStorage.getItem(`mathlab_max_level_${currentPage}`);
+    const savedModal = localStorage.getItem(`mathlab_showModal_${currentPage}`);
+
+    setCurrentLevelIndex(saved !== null ? parseInt(saved, 10) : 0);
+    setProgress(savedProgress !== null ? parseFloat(savedProgress) : 0);
+    setStreak(savedStreak !== null ? parseInt(savedStreak, 10) : 0);
+    setMaxLevelReached(savedMax !== null ? parseInt(savedMax, 10) : 0);
+    setShowModal(savedModal !== null ? JSON.parse(savedModal) : true);
+
+    loadProblem(saved !== null ? parseInt(saved, 10) : 0);
+  }, [currentPage]);
 
   // Initialize first problem
   useEffect(() => {
@@ -680,7 +882,8 @@ export default function MathHomeworkApp() {
   }, []);
 
   const loadProblem = (idx) => {
-    const generator = homeworkFlow[idx % homeworkFlow.length];
+    const flow = getCurrentFlow();
+    const generator = flow[idx % flow.length];
     const newProb = generator();
     setProblem(newProb);
     setFeedback({ type: null, message: "" });
@@ -690,7 +893,8 @@ export default function MathHomeworkApp() {
   };
 
   const handleLevelComplete = (withHints) => {
-    const isLastLevel = currentLevelIndex === homeworkFlow.length - 1;
+    const flow = getCurrentFlow();
+    const isLastLevel = currentLevelIndex === flow.length - 1;
     setIsLevelComplete(true);
 
     // Show all hints on correct answer
@@ -700,7 +904,8 @@ export default function MathHomeworkApp() {
     if (!withHints) {
       setStreak(s => s + 1);
 
-      const newProgress = Math.min(100, ((currentLevelIndex + 1) / homeworkFlow.length) * 100);
+      const flow = getCurrentFlow();
+      const newProgress = Math.min(100, ((currentLevelIndex + 1) / flow.length) * 100);
       setProgress(prev => Math.max(prev, newProgress));
 
       setFeedback({
@@ -719,8 +924,9 @@ export default function MathHomeworkApp() {
   };
 
   const handleNextLevel = () => {
+    const flow = getCurrentFlow();
     const nextLevel = currentLevelIndex + 1;
-    if (nextLevel >= homeworkFlow.length) {
+    if (nextLevel >= flow.length) {
       setIsGameComplete(true);
     } else {
       setCurrentLevelIndex(nextLevel);
@@ -820,7 +1026,7 @@ export default function MathHomeworkApp() {
           <div className="flex justify-between items-center mb-2">
             <h1 className="text-xl font-bold flex items-center text-indigo-600 gap-2">
               <Calculator className="w-6 h-6" />
-              MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Aritmetinė Progresija</span>
+              MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| {getPageTitle()}</span>
             </h1>
             <div className="flex items-center gap-3 text-sm font-medium text-slate-500">
               <div className="relative">
@@ -829,7 +1035,7 @@ export default function MathHomeworkApp() {
                   className="flex items-center gap-1 hover:text-indigo-600 transition-colors cursor-pointer"
                 >
                   <List className="w-4 h-4" />
-                  Lygis {currentLevelIndex + 1}/{homeworkFlow.length}
+                  Lygis {currentLevelIndex + 1}/{getCurrentFlow().length}
                   <ChevronDown className={`w-3 h-3 transition-transform ${showLevelMenu ? 'rotate-180' : ''}`} />
                 </button>
 
@@ -839,7 +1045,8 @@ export default function MathHomeworkApp() {
                       Pasirinkite lygį
                     </div>
                     <div className="max-h-[60vh] overflow-y-auto">
-                      {levelCategories.map((cat, idx) => {
+                      {getCurrentFlow().map((fn, idx) => {
+                        const cat = fn().category;
                         const isLocked = idx > maxLevelReached;
                         const isActive = idx === currentLevelIndex;
 
