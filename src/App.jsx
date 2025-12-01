@@ -4,23 +4,30 @@ import LandingPage from './LandingPage';
 import MathHomeworkApp from '../medos.jsx';
 
 export default function App() {
-  const [selectedTopic, setSelectedTopic] = useState(() => {
-    return localStorage.getItem('mathlab_selected_topic') || null;
-  });
+  const getTopicFromHash = () => {
+    const hash = window.location.hash.slice(1); // Remove the '#'
+    return hash || null;
+  };
+
+  const [selectedTopic, setSelectedTopic] = useState(getTopicFromHash);
 
   useEffect(() => {
-    if (selectedTopic) {
-      localStorage.setItem('mathlab_selected_topic', selectedTopic);
-    } else {
-      localStorage.removeItem('mathlab_selected_topic');
-    }
-  }, [selectedTopic]);
+    // Listen for hash changes (back/forward browser buttons)
+    const handleHashChange = () => {
+      setSelectedTopic(getTopicFromHash());
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleSelectTopic = (topicId) => {
+    window.location.hash = topicId;
     setSelectedTopic(topicId);
   };
 
   const handleBackToLanding = () => {
+    window.location.hash = '';
     setSelectedTopic(null);
   };
 
