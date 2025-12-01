@@ -668,6 +668,12 @@ export default function MathHomeworkApp() {
     }
   }, [currentLevelIndex, maxLevelReached]);
 
+  // Sync progress with maxLevelReached to ensure it reflects unlocked levels
+  useEffect(() => {
+    const minProgress = (maxLevelReached / homeworkFlow.length) * 100;
+    setProgress(prev => Math.max(prev, minProgress));
+  }, [maxLevelReached]);
+
   // Initialize first problem
   useEffect(() => {
     if (!problem) loadProblem(currentLevelIndex);
@@ -695,7 +701,7 @@ export default function MathHomeworkApp() {
       setStreak(s => s + 1);
 
       const newProgress = Math.min(100, ((currentLevelIndex + 1) / homeworkFlow.length) * 100);
-      setProgress(newProgress);
+      setProgress(prev => Math.max(prev, newProgress));
 
       setFeedback({
         type: 'success',
