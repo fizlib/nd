@@ -840,7 +840,7 @@ export default function MathHomeworkApp() {
                     </div>
                     <div className="max-h-[60vh] overflow-y-auto">
                       {levelCategories.map((cat, idx) => {
-                        const isLocked = idx > maxLevelReached;
+                        const isLocked = false; // All levels are now accessible
                         const isActive = idx === currentLevelIndex;
 
                         return (
@@ -1087,11 +1087,11 @@ export default function MathHomeworkApp() {
             <div className="space-y-4 mb-8">
               <div className="flex items-start gap-3 text-sm text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100">
                 <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                <span>Spręskite be užuominų, kad atrakintumėte kitą lygį.</span>
+                <span>Visi 10 lygių yra prieinami iš karto - pasirinkite bet kurį!</span>
               </div>
               <div className="flex items-start gap-3 text-sm text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100">
                 <RotateCw className="w-5 h-5 text-amber-500 shrink-0" />
-                <span>Naudojant užuominas, lygį reikės kartoti.</span>
+                <span>Naudokite užuominas, jei reikia pagalbos sprendžiant.</span>
               </div>
             </div>
 
