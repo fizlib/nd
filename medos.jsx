@@ -14,6 +14,7 @@ import {
   ChevronDown,
   ArrowLeft
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // --- KaTeX Loader & Component ---
 const useKatex = () => {
@@ -805,6 +806,10 @@ export default function MathHomeworkApp() {
               <ArrowLeft className="w-5 h-5" />
               Grįžti
             </button>
+            <Link to="/" className="w-full bg-white hover:bg-slate-50 text-indigo-600 border border-indigo-200 font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+              <ArrowLeft className="w-5 h-5" />
+              Grįžti į pradžią
+            </Link>
           </div>
         </div>
       </div>
@@ -818,10 +823,15 @@ export default function MathHomeworkApp() {
       <nav className="bg-white shadow-sm border-b border-slate-200 p-4 sticky top-0 z-10">
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-2">
-            <h1 className="text-xl font-bold flex items-center text-indigo-600 gap-2">
-              <Calculator className="w-6 h-6" />
-              MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Aritmetinė Progresija</span>
-            </h1>
+            <div className="flex items-center gap-2">
+              <Link to="/" className="text-slate-400 hover:text-indigo-600 transition-colors">
+                <ArrowLeft className="w-5 h-5" />
+              </Link>
+              <h1 className="text-xl font-bold flex items-center text-indigo-600 gap-2">
+                <Calculator className="w-6 h-6" />
+                MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Aritmetinė Progresija</span>
+              </h1>
+            </div>
             <div className="flex items-center gap-3 text-sm font-medium text-slate-500">
               <div className="relative">
                 <button
