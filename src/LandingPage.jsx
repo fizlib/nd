@@ -10,7 +10,7 @@ export default function LandingPage() {
                 <div className="max-w-5xl mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center gap-2 text-indigo-600">
                         <Calculator className="w-8 h-8" />
-                        <span className="text-2xl font-bold tracking-tight">MathLab</span>
+                        <span className="text-2xl font-bold tracking-tight">HomeworkLab</span>
                     </div>
                 </div>
             </header>
@@ -19,11 +19,10 @@ export default function LandingPage() {
             <main className="flex-1 max-w-5xl mx-auto px-4 py-12 w-full">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
-                        Pasirinkite mokymosi temą
+                        HomeworkLab
                     </h1>
                     <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                        Interaktyvūs uždaviniai ir teorija, padėsianti įsisavinti matematines progresijas.
-                        Pasirinkite temą ir pradėkite spręsti.
+                        Interaktyvūs matematikos ir fizikos pratimai
                     </p>
                 </div>
 
@@ -84,7 +83,7 @@ export default function LandingPage() {
 
             {/* Footer */}
             <footer className="py-8 text-center text-slate-400 text-sm">
-                <p>© {new Date().getFullYear()} MathLab. FizLib.</p>
+                <p>© {new Date().getFullYear()} HomeworkLab. FizLib.</p>
             </footer>
         </div>
     );
