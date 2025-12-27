@@ -47,9 +47,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold flex items-center text-indigo-600 gap-3">
             <Calculator className="w-8 h-8" />
-            MathLab
+            HomeworkLab
           </h1>
-          <p className="text-slate-500 mt-2">Interaktyvūs matematikos pratimai</p>
+          <p className="text-slate-500 mt-2">Interaktyvūs matematikos ir fizikos pratimai</p>
         </div>
       </header>
 
@@ -100,7 +100,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm">
-        <p>© 2025 MathLab - Interaktyvūs matematikos pratimai</p>
+        <p>© 2025 HomeworkLab - Interaktyvūs matematikos ir fizikos pratimai</p>
       </footer>
     </div>
   );

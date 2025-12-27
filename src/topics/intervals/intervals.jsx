@@ -833,7 +833,7 @@ export default function IntervalsTopic() {
                     <div className="flex justify-between items-center mb-2">
                         <h1 className="text-xl font-bold flex items-center text-indigo-600 gap-2">
                             <Calculator className="w-6 h-6" />
-                            MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Intervalai</span>
+                            HomeworkLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Intervalai</span>
                             {isDev && (
                                 <button
                                     onClick={handleUnlockAll}

@@ -829,7 +829,7 @@ export default function MathHomeworkApp() {
               </Link>
               <h1 className="text-xl font-bold flex items-center text-indigo-600 gap-2">
                 <Calculator className="w-6 h-6" />
-                MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Aritmetinė Progresija</span>
+                HomeworkLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Aritmetinė Progresija</span>
               </h1>
             </div>
             <div className="flex items-center gap-3 text-sm font-medium text-slate-500">

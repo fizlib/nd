@@ -726,7 +726,7 @@ export default function GeometricHomeworkApp() {
                             </Link>
                             <h1 className="text-xl font-bold flex items-center text-emerald-600 gap-2">
                                 <TrendingUp className="w-6 h-6" />
-                                MathLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Geometrinė Progresija</span>
+                                HomeworkLab <span className="text-slate-400 font-normal text-sm hidden sm:inline">| Geometrinė Progresija</span>
                             </h1>
                         </div>
 
