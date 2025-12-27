@@ -1,21 +1,44 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Calculator, ArrowRight, TrendingUp } from 'lucide-react';
 
 const topics = [
   {
-    id: 'arithmetic-progression',
+    id: 'arithmetic',
     title: 'Aritmetinė Progresija',
     description: 'Mokykitės aritmetinės progresijos pagrindų: narių radimo, sumos skaičiavimo ir formulių.',
     levels: 10,
     color: 'indigo',
-    path: '/topics/arithmetic-progression'
+    path: '/topics/arithmetic'
+  },
+  {
+    id: 'intervals',
+    title: 'Skaičių Intervalai',
+    description: 'Mokykitės atpažinti skaičių intervalus ir susieti juos su nelygybėmis.',
+    levels: 1,
+    color: 'emerald',
+    path: '/topics/intervals'
+  },
+  {
+    id: 'inequalities',
+    title: 'Nelygybės',
+    description: 'Mokykitės spręsti tiesines nelygybes, nuo paprastų iki sudėtingesnių.',
+    levels: 8,
+    color: 'orange',
+    path: '/topics/inequalities'
   }
   // Add more topics here in the future
 ];
 
 export default function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === '#arithmetic-progression') {
+      navigate('/topics/arithmetic');
+    }
+  }, [location, navigate]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
